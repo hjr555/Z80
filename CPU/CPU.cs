@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Z80.Z80;
 using Z80.Z80.Ports;
 
 namespace Z80
@@ -96,7 +97,7 @@ namespace Z80
                     break;
 
                 case 0x02: // LD (bc), a
-                    RAM.SetByte(Registers.BC, Registers.A);
+                    RAM.SetByte(Registers.BC.Value, Registers.A);
                     Clock.IncrementClock(7);
                     break;
 
@@ -112,18 +113,24 @@ namespace Z80
                     Registers.B = Decrement(Registers.B);
                     break;
 
+                case 0x06: // LD B, *
+                    
+                    
+
+
+                    Clock.IncrementClock(7);
+                    break;
+
                 default:
                     throw new NotImplementedException();
             }
         }
 
-        private ushort Increment(ushort register)
+        private void Increment(Register register)
         {
             Clock.IncrementClock(6);
 
-            register++;
-
-            return register;
+            register.Increment();
         }
 
         private byte Increment(byte register)
@@ -138,6 +145,13 @@ namespace Z80
             register++;
 
             return register;
+        }
+
+        private void Decrement(Register register)
+        {
+            Clock.IncrementClock(6);
+            
+            register.Increment();
         }
 
         private byte Decrement(byte register)
@@ -173,5 +187,34 @@ namespace Z80
 
             return returnValue;
         }
+
+        // 8 bit load group
+        // LD r, r'
+        private void LD_R_R()
+        {
+            
+
+            Clock.IncrementClock(1);
+        }
+
+        // LD r, n
+        // LD r, (HL)
+        // LD r, (IX+d)
+        // LD r, (IY+d)
+        // LD (HL), r
+        // LD (IX+d), r
+        // LD (IY+d), r
+        // LD (HL), n
+        // LD (IX+d), n
+        // LD (IY+d), n
+        // LD A, (BC)
+        // LD A, (DE)
+        // LD A, (nn)
+        // LD (BC), A
+        // LD (DE), A
+        // LD I, A
+        // LD R, A
+
+
     }
 }
