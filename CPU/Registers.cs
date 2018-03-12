@@ -8,15 +8,15 @@ namespace Z80
         private static Flags flags => (Flags)F;
 
         // Shadow registers
-        private static Register AFshadow;
-        private static Register BCshadow;
-        private static Register DEshadow;
-        private static Register HLshadow;
+        private static Register16 AFshadow;
+        private static Register16 BCshadow;
+        private static Register16 DEshadow;
+        private static Register16 HLshadow;
 
-        public static Register AF;
-        public static Register BC;
-        public static Register DE;
-        public static Register HL;
+        public static Register16 AF;
+        public static Register16 BC;
+        public static Register16 DE;
+        public static Register16 HL;
 
         public static byte A
         {
@@ -121,22 +121,22 @@ namespace Z80
         /// <summary>
         /// Stack Pointer
         /// </summary>
-        public static Register SP;
+        public static Register16 SP;
 
         /// <summary>
         /// Program Counter.
         /// </summary>
-        public static Register PC;
+        public static Register16 PC;
 
         /// <summary>
         /// Index Register
         /// </summary>
-        public static Register IX;
+        public static Register16 IX;
 
         /// <summary>
         /// Index Register
         /// </summary>
-        public static Register IY;
+        public static Register16 IY;
 
         public static bool Carry
         {
@@ -249,21 +249,21 @@ namespace Z80
 
         public static void Initialize()
         {
-            AF = new Register(0xFFFF);
-            BC = new Register(0xFFFF);
-            DE = new Register(0xFFFF);
-            HL = new Register(0xFFFF);
-            AFshadow = new Register(0xFFFF);
-            BCshadow = new Register(0xFFFF);
-            DEshadow = new Register(0xFFFF);
-            HLshadow = new Register(0xFFFF);
+            AF = new Register16(0xFFFF);
+            BC = new Register16(0xFFFF);
+            DE = new Register16(0xFFFF);
+            HL = new Register16(0xFFFF);
+            AFshadow = new Register16(0xFFFF);
+            BCshadow = new Register16(0xFFFF);
+            DEshadow = new Register16(0xFFFF);
+            HLshadow = new Register16(0xFFFF);
 
             I = 0xFF;
             R = 0xFF;
-            SP = new Register(0xFFFF);
-            PC = new Register(0x0000);
-            IX = new Register(0xFFFF);
-            IY = new Register(0xFFFF);
+            SP = new Register16(0xFFFF);
+            PC = new Register16(0x0000);
+            IX = new Register16(0xFFFF);
+            IY = new Register16(0xFFFF);
         }
 
         /// <summary>

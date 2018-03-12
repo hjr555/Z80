@@ -79,21 +79,17 @@ namespace Z80
          */
         private void FetchDecodeExecute()
         {
-            var instruction = RAM.GetByte(Registers.PC++);
+            var instruction = RAM.GetByte(Registers.PC.Value);
+            Registers.PC.Increment();
 
             switch (instruction)
             {
                 case 0x00: // NOP
-                    
                     Clock.IncrementClock(4);
                     break;
 
                 case 0x01: // LD BC, nn      10
-                    // 3 byte instruction
-
-                    Registers.BC = GetWord();
-
-                    Clock.IncrementClock(10);
+                    Load_RR_nn(Registers.BC);
                     break;
 
                 case 0x02: // LD (bc), a
@@ -102,7 +98,7 @@ namespace Z80
                     break;
 
                 case 0x03: // INC BC
-                    Registers.BC = Increment(Registers.BC);
+                    Increment(Registers.BC);
                     break;
 
                 case 0x04: // INC B
@@ -115,10 +111,18 @@ namespace Z80
 
                 case 0x06: // LD B, *
                     
-                    
-
 
                     Clock.IncrementClock(7);
+                    break;
+
+                case 0x11:// LD DE, nn      10
+                    Load_RR_nn(Registers.DE);
+                    break;
+                case 0x21:// LD BC, nn      10
+                    Load_RR_nn(Registers.HL);
+                    break;
+                case 0x31:// LD BC, nn      10
+                    Load_RR_nn(Registers.SP);
                     break;
 
                 default:
@@ -126,7 +130,7 @@ namespace Z80
             }
         }
 
-        private void Increment(Register register)
+        private void Increment(Register16 register)
         {
             Clock.IncrementClock(6);
 
@@ -147,7 +151,7 @@ namespace Z80
             return register;
         }
 
-        private void Decrement(Register register)
+        private void Decrement(Register16 register)
         {
             Clock.IncrementClock(6);
             
@@ -172,9 +176,9 @@ namespace Z80
         {
             ushort returnValue;
 
-            returnValue = RAM.GetWord(Registers.PC);
+            returnValue = RAM.GetWord(Registers.PC.Value);
 
-            Registers.PC += 2;
+            Registers.PC.Increment(2);
 
             return returnValue;
         }
@@ -183,7 +187,9 @@ namespace Z80
         {
             byte returnValue;
 
-            returnValue = RAM.GetByte(Registers.PC++);
+            returnValue = RAM.GetByte(Registers.PC.Value);
+
+            Registers.PC.Increment();
 
             return returnValue;
         }
@@ -192,9 +198,18 @@ namespace Z80
         // LD r, r'
         private void LD_R_R()
         {
-            
+            Regis
 
             Clock.IncrementClock(1);
+        }
+
+        private void Load_R_n()
+
+        private void Load_RR_nn(Register16 register)
+        {
+            register.Value = GetWord();
+
+            Clock.IncrementClock(10);
         }
 
         // LD r, n
