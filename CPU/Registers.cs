@@ -7,6 +7,10 @@ namespace Z80
     {
         private static Flags flags => (Flags)F.Value;
 
+        private static bool IFF1;
+        private static bool IFF2;
+        private static bool IM;
+
         // Shadow registers
         private static Register16 AFshadow;
         private static Register16 BCshadow;
@@ -258,12 +262,14 @@ namespace Z80
             DEshadow = new Register16(0xFFFF);
             HLshadow = new Register16(0xFFFF);
 
-            I = new Register8(0xFF);
-            R = new Register8(0xFF);
-            SP = new Register16(0xFFFF);
-            PC = new Register16(0x0000);
             IX = new Register16(0xFFFF);
             IY = new Register16(0xFFFF);
+            
+            SP = new Register16(0xFFFF);
+            PC = new Register16(0x0000);
+
+            I = new Register8(0xFF);
+            R = new Register8(0xFF);
         }
 
         /// <summary>

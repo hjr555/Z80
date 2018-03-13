@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ClockAdapter\ClockAdapter.csproj" />
+    <ProjectReference Include="..\CPU\Z80.csproj" />
+    <ProjectReference Include="..\MemoryAdapter\MemoryAdapter.csproj" />
+  </ItemGroup>
+
+</Project>

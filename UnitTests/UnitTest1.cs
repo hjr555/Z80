@@ -23,7 +23,7 @@ namespace UnitTests
             Memory = new Memory(1024);
 
             Registers.Initialize();
-            Sut = new CPU(1024, Clock, Memory);
+            Sut = new CPU(Clock, Memory);
         }
 
         [TestCleanup()]

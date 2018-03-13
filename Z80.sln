@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClockAdapter", "ClockAdapte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryAdapter", "MemoryAdapter\MemoryAdapter.csproj", "{3A1087DA-2BEB-42D6-B59F-0EBD7E15F2DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness", "TestHarness\TestHarness.csproj", "{BE8EE9E5-A900-4C78-A9AB-8F607E1FADF3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{3A1087DA-2BEB-42D6-B59F-0EBD7E15F2DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A1087DA-2BEB-42D6-B59F-0EBD7E15F2DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A1087DA-2BEB-42D6-B59F-0EBD7E15F2DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE8EE9E5-A900-4C78-A9AB-8F607E1FADF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE8EE9E5-A900-4C78-A9AB-8F607E1FADF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE8EE9E5-A900-4C78-A9AB-8F607E1FADF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE8EE9E5-A900-4C78-A9AB-8F607E1FADF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

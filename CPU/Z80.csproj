@@ -44,6 +44,7 @@
     <Compile Include="ALU.cs" />
     <Compile Include="CPU.cs" />
     <Compile Include="Enumerations\Flags.cs" />
+    <Compile Include="Exceptions\CpuHaltInstruction.cs" />
     <Compile Include="Exceptions\ReferenceOutsideAddressSpaceException.cs" />
     <Compile Include="Interfaces\IRegister.cs" />
     <Compile Include="Ports\IClock.cs" />

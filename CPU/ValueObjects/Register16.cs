@@ -22,6 +22,9 @@ namespace Z80.Z80
 
         public Register16(ushort initialValue)
         {
+            High = new Register8(0xFF);
+            Low = new Register8(0xFF);
+
             Value = initialValue;    
         }
 
@@ -52,6 +55,11 @@ namespace Z80.Z80
             register.Sub(1);
 
             return register;
+        }
+
+        public override string ToString()
+        {
+            return Value.ToString("X");
         }
     }
 }
