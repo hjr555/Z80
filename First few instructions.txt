@@ -1,0 +1,10 @@
+LD HL, 7FFFFH
+LD A, 3FH
+JP 0261H
+
+-- Start of loop
+LD (HL), 01H
+DEC HL
+CP H
+JR NZ, $-04H
+-- Keep looping
