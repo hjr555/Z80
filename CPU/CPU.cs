@@ -166,29 +166,49 @@ namespace Z80
                 case 0x18: JR_n(); 
                     break;
 
-                case 0x19: break;
-                case 0x1A: break;
-                case 0x1B: break;
-                case 0x1C: break;
-                case 0x1D: break;
-                case 0x1E: break;
-                case 0x1F: break;
+                case 0x19: Add_HL_RR(Registers.DE);
+                    break;
 
+                case 0x1A: LD_R_rr(Registers.A, Registers.DE);
+                    break;
+
+                case 0x1B: Decrement(Registers.DE);
+                    break;
+
+                case 0x1C: Increment(Registers.E);
+                    break;
+
+                case 0x1D: Decrement(Registers.E);
+                    break;
+
+                case 0x1E: LD_R_n(Registers.E);
+                    break;
+
+                case 0x1F: RRA();
+                    break;
+                
                 /*--------------------------------------------*/
-
-                case 0x20: break;
+                
+                case 0x20:
+                    Clock.IncrementClock(12m / 7m);
+                    break;
 
                 case 0x21: // LD HL, nn      10
                     LD_RR_nn(Registers.HL);
                     break;
 
                 case 0x22: break;
-                case 0x23: break;
-                case 0x24: break;
-                case 0x25: break;
 
-                case 0x26: // LD H, n
-                    LD_R_n(Registers.H);
+                case 0x23: Increment(Registers.HL);
+                    break;
+
+                case 0x24: Increment(Registers.H);
+                    break;
+
+                case 0x25: Decrement(Registers.H);
+                    break;
+
+                case 0x26: LD_R_n(Registers.H);
                     break;
                 
                 case 0x27: break;
@@ -200,9 +220,9 @@ namespace Z80
                 case 0x2D: break;
                 case 0x2E: break;
                 case 0x2F: break;
-
+                
                 /*--------------------------------------------*/
-
+                
                 case 0X30: break;
 
                 case 0x31:// LD SP, nn      10
@@ -223,18 +243,65 @@ namespace Z80
                 case 0x3D: break;
                 case 0x3E: break;
                 case 0x3F: break;
+                /*--------------------------------------------*/
+                case 0x40: break;
+                /*--------------------------------------------*/
+                case 0x50: break;
+                /*--------------------------------------------*/
+                case 0x60: break;
+                /*--------------------------------------------*/
+                case 0x70: break;
+                /*--------------------------------------------*/
+                case 0x80: break;
+                /*--------------------------------------------*/
+                case 0x90: break;
+                case 0x91: break;
+                case 0x92: break;
+                case 0x93: break;
+                case 0x94: break;
+                case 0x95: break;
+                case 0x96: break;
+                case 0x97: break;
+                case 0x98: break;
+                case 0x99: break;
+                case 0x9A: break;
+                case 0x9B: break;
+                case 0x9C: break;
+                case 0x9D: break;
+                case 0x9E: break;
+                case 0x9F: break;
 
                 /*--------------------------------------------*/
+                case 0xA0: break;
+                /*--------------------------------------------*/
+                case 0xB0: break;
+                /*--------------------------------------------*/
+                case 0xC0: break;
+                /*--------------------------------------------*/
+                case 0xD0: break;
+                /*--------------------------------------------*/
+                case 0xE0: break;
+                /*--------------------------------------------*/
+                case 0xF0: break;
+                /*--------------------------------------------*/
+
+                case 0xCB: // BIT instructions
+                    throw new NotImplementedException();
+
+                case 0xDD: // IX instructions
+                    throw new NotImplementedException();
+
+                case 0xED: // EXTD instruction set
+                    throw new NotImplementedException();
+
+                case 0xFD: // IY instruction set
+                    throw new NotImplementedException();
 
                 default:
                     throw new NotImplementedException();
             }
         }
 
-        // INC BC
-        // INC DE
-        // INC HL
-        // INC SP
         private void Increment(Register16 register)
         {
             Clock.IncrementClock(6);
@@ -242,13 +309,6 @@ namespace Z80
             register++;
         }
 
-        // INC B
-        // INC D
-        // INC H
-        // INC C
-        // INC E
-        // INC L
-        // INC A
         private void Increment(Register8 register)
         {
             Clock.IncrementClock(4);
@@ -256,11 +316,6 @@ namespace Z80
             register++;
         }
 
-
-        // DEC BC
-        // DEC DE
-        // DEC HL
-        // DEC SP
         private void Decrement(Register16 register)
         {
             Clock.IncrementClock(6);
@@ -280,7 +335,6 @@ namespace Z80
         // LD r, r'
         private void LD_R_R()
         {
-            
 
             Clock.IncrementClock(1);
         }
@@ -386,6 +440,34 @@ namespace Z80
             Clock.IncrementClock(4);
         }
 
+        private void RLA()
+        {
+            bool carryBit = (byte)(Registers.A.Value & (byte)128) == 128;
+
+            var result = (byte)(Registers.A.Value << 1);
+
+            result = (byte)(result | (Registers.Carry ? 1 : 0));
+
+            Registers.Carry = carryBit;
+            Registers.A.Value = result;
+
+            Clock.IncrementClock(4);
+        }
+
+        private void RRA()
+        {
+            bool carryBit = (byte)(Registers.A.Value & 1) == 1;
+
+            var result = (byte)(Registers.A.Value >> 1);
+
+            result = (byte)(result | (Registers.Carry ? 1 : 0));
+
+            Registers.Carry = carryBit;
+            Registers.A.Value = result;
+
+            Clock.IncrementClock(4);
+        }
+
         private void Add_HL_RR(Register16 register)
         {
             register.Add(register);
@@ -403,23 +485,6 @@ namespace Z80
             }
 
             Clock.IncrementClock(13m / 8m);
-        }
-
-        private void RLA()
-        {
-            bool carryBit = (byte)(Registers.A.Value & (byte)128) == 128;
-
-            var result = (byte)(Registers.A.Value << 1);
-
-            if(Registers.Carry)
-            {
-                result = (byte)(result | 1);
-            }
-
-            Registers.Carry = carryBit;
-            Registers.A.Value = result;
-
-            Clock.IncrementClock(4);
         }
 
         private void JR_n()
