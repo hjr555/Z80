@@ -244,11 +244,57 @@ namespace Z80
                 case 0x3E: break;
                 case 0x3F: break;
                 /*--------------------------------------------*/
-                case 0x40: break;
+                case 0x40: LD_R_R(Registers.B, Registers.B); break;
+                case 0x41: LD_R_R(Registers.B, Registers.C); break;
+                case 0x42: LD_R_R(Registers.B, Registers.D); break;
+                case 0x43: LD_R_R(Registers.B, Registers.E); break;
+                case 0x44: LD_R_R(Registers.B, Registers.H); break;
+                case 0x45: LD_R_R(Registers.B, Registers.L); break;
+                case 0x46: throw new NotImplementedException();
+                case 0x47: LD_R_R(Registers.C, Registers.A); break;
+                case 0x48: LD_R_R(Registers.C, Registers.B); break;
+                case 0x49: LD_R_R(Registers.C, Registers.C); break;
+                case 0x4A: LD_R_R(Registers.C, Registers.D); break;
+                case 0x4B: LD_R_R(Registers.C, Registers.E); break;
+                case 0x4C: LD_R_R(Registers.C, Registers.H); break;
+                case 0x4D: LD_R_R(Registers.C, Registers.L); break;
+                case 0x4E: throw new NotImplementedException();
+                case 0x4F: LD_R_R(Registers.C, Registers.A); break;
+
                 /*--------------------------------------------*/
-                case 0x50: break;
+                case 0x50: LD_R_R(Registers.D, Registers.B); break;
+                case 0x51: LD_R_R(Registers.D, Registers.C); break;
+                case 0x52: LD_R_R(Registers.D, Registers.D); break;
+                case 0x53: LD_R_R(Registers.D, Registers.E); break;
+                case 0x54: LD_R_R(Registers.D, Registers.H); break;
+                case 0x55: LD_R_R(Registers.D, Registers.L); break;
+                case 0x56: throw new NotImplementedException();
+                case 0x57: LD_R_R(Registers.D, Registers.A); break;
+                case 0x58: LD_R_R(Registers.E, Registers.B); break;
+                case 0x59: LD_R_R(Registers.E, Registers.C); break;
+                case 0x5A: LD_R_R(Registers.E, Registers.D); break;
+                case 0x5B: LD_R_R(Registers.E, Registers.E); break;
+                case 0x5C: LD_R_R(Registers.E, Registers.H); break;
+                case 0x5D: LD_R_R(Registers.E, Registers.L); break;
+                case 0x5E: throw new NotImplementedException();
+                case 0x5F: LD_R_R(Registers.E, Registers.A); break;
                 /*--------------------------------------------*/
-                case 0x60: break;
+                case 0x60: LD_R_R(Registers.H, Registers.B); break;
+                case 0x61: LD_R_R(Registers.H, Registers.C); break;
+                case 0x62: LD_R_R(Registers.H, Registers.D); break;
+                case 0x63: LD_R_R(Registers.H, Registers.E); break;
+                case 0x64: LD_R_R(Registers.H, Registers.H); break;
+                case 0x65: LD_R_R(Registers.H, Registers.L); break;
+                case 0x66: throw new NotImplementedException();
+                case 0x67: LD_R_R(Registers.H, Registers.A); break;
+                case 0x68: LD_R_R(Registers.L, Registers.B); break;
+                case 0x69: LD_R_R(Registers.L, Registers.C); break;
+                case 0x6A: LD_R_R(Registers.L, Registers.D); break;
+                case 0x6B: LD_R_R(Registers.L, Registers.E); break;
+                case 0x6C: LD_R_R(Registers.L, Registers.H); break;
+                case 0x6D: LD_R_R(Registers.L, Registers.L); break;
+                case 0x6E: throw new NotImplementedException();
+                case 0x6F: LD_R_R(Registers.L, Registers.A); break;
                 /*--------------------------------------------*/
                 case 0x70: break;
                 /*--------------------------------------------*/
@@ -277,16 +323,57 @@ namespace Z80
                 case 0xB0: break;
                 /*--------------------------------------------*/
                 case 0xC0: break;
-                /*--------------------------------------------*/
-                case 0xD0: break;
-                /*--------------------------------------------*/
-                case 0xE0: break;
-                /*--------------------------------------------*/
-                case 0xF0: break;
-                /*--------------------------------------------*/
+
+                case 0xC1: Pop(Registers.BC);
+                    break;
+
+                case 0xC2: break;
+                case 0xC3: break;
+                case 0xC4: break;
+
+                case 0xC5: Push(Registers.BC);
+                    break;
+
+                case 0xC6: break;
+                case 0xC7: break;
+                case 0xC8: break;
+                case 0xC9: break;
+                case 0xCA: break;
 
                 case 0xCB: // BIT instructions
                     throw new NotImplementedException();
+
+                case 0xCC: break;
+                case 0xCD: break;
+                case 0xCE: break;
+                case 0xCF: break;
+                /*--------------------------------------------*/
+                case 0xD0: break;
+
+                case 0xD1: Pop(Registers.DE);
+                    break;
+
+                case 0xD5: Push(Registers.DE);
+                    break;
+
+                /*--------------------------------------------*/
+                case 0xE0: break;
+
+                case 0xE1: Pop(Registers.HL);
+                    break;
+
+                case 0xE5: Push(Registers.HL);
+                    break;
+
+                /*--------------------------------------------*/
+
+                case 0xF1: Pop(Registers.AF);
+                    break;
+                
+                case 0xF5: Push(Registers.AF);
+                    break;
+
+                /*--------------------------------------------*/
 
                 case 0xDD: // IX instructions
                     throw new NotImplementedException();
@@ -333,10 +420,11 @@ namespace Z80
 
         // 8 bit load group
         // LD r, r'
-        private void LD_R_R()
+        private void LD_R_R(Register8 dest, Register8 source)
         {
+            dest.Value = source.Value;
 
-            Clock.IncrementClock(1);
+            Clock.IncrementClock(4);
         }
 
         // LD B, n
@@ -494,6 +582,24 @@ namespace Z80
             Clock.IncrementClock(12);
         }
 
+        private void Push(Register16 register)
+        {
+            Registers.SP--;
+            RAM.SetByte(Registers.SP.Value, register.Low.Value);
+
+            Registers.SP--;
+            RAM.SetByte(Registers.SP.Value, register.High.Value);
+
+            Clock.IncrementClock(11);
+        }
+
+        private void Pop(Register16 register)
+        {
+            register.High.Value = RAM.GetByte(Registers.SP.Value++);
+            register.Low.Value = RAM.GetByte(Registers.SP.Value++);
+
+            Clock.IncrementClock(10);
+        }
 
         private ushort GetWord()
         {
