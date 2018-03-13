@@ -2,7 +2,7 @@
 {
     public interface IRegister
     {
-        void Increment(byte count = 1);
-        void Decrement(byte count = 1);
+        void Add(byte value);
+        void Sub(byte value);
     }
 }

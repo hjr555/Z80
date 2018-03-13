@@ -3,6 +3,7 @@
     public interface IClock
     {
         void IncrementClock(int numberOfCycles);
-        ulong GetElapsedCycles();
+        void IncrementClock(decimal numberOfCycles);
+        decimal GetElapsedCycles();
     }
 }

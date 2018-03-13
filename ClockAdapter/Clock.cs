@@ -4,16 +4,21 @@ namespace ClockAdapter
 {
     public class Clock : IClock
     {
-        private ulong Timer { get; set; }
+        private decimal Timer { get; set; }
 
-        public ulong GetElapsedCycles()
+        public decimal GetElapsedCycles()
         {
             return Timer;
         }
 
         public void IncrementClock(int numberOfCycles)
         {
-            Timer += (ulong)numberOfCycles;
+            Timer += (decimal)numberOfCycles;
+        }
+
+        public void IncrementClock(decimal numberOfCycles)
+        {
+            Timer += numberOfCycles;
         }
     }
 }

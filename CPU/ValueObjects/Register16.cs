@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using Z80.Z80.Interfaces;
+﻿using Z80.Z80.Interfaces;
 
 namespace Z80.Z80
 {
@@ -8,26 +7,51 @@ namespace Z80.Z80
         public Register8 High { get; set; }
         public Register8 Low { get; set; }
 
+        public ushort Value
+        {
+            get
+            {
+                return (ushort)((Low.Value << 8) + High.Value);
+            }
+            set
+            {
+                High.Value = (byte)value;
+                Low.Value = (byte)(value >> 8);
+            }
+        }
+
         public Register16(ushort initialValue)
         {
             Value = initialValue;    
         }
 
+        public void Add(Register16 register)
+        {
+            Value = (ushort)(Value + register.Value);
+        }
+
+        public void Add(byte value)
+        {
+            Value = (ushort)(Value + value);
+        }
+
+        public void Sub(byte value)
+        {
+            Value = (ushort)(Value - value);
+        }
+        
         public static Register16 operator ++(Register16 register)
         {
-            register.Increment();
+            register.Add(1);
 
             return register;
         }
 
-        public void Increment(byte count = 1)
+        public static Register16 operator --(Register16 register)
         {
-            throw new System.NotImplementedException();
-        }
+            register.Sub(1);
 
-        public void Decrement(byte count = 1)
-        {
-            throw new System.NotImplementedException();
+            return register;
         }
     }
 }

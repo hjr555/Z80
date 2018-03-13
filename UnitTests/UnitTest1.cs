@@ -59,25 +59,11 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void LD_BC_nn()
-        {
-            byte instruction = 0x01;
-
-            SetupMemory(instruction, 99, 88);
-
-            Sut.ExecuteNextInstruction();
-
-            Assert.AreEqual(22627, Registers.BC);
-            Assert.AreEqual(10, (int)Clock.GetElapsedCycles());
-            Assert.AreEqual(3, Registers.PC);
-        }
-
-        [TestMethod]
         public void LD_bc_A()
         {
             byte instruction = 0x02;
-            Registers.A = 99;
-            Registers.BC = 500;
+            Registers.A.Value = 99;
+            Registers.BC.Value = 500;
 
             SetupMemory(instruction);
 
@@ -92,7 +78,7 @@ namespace UnitTests
         public void INC_BC()
         {
             byte instruction = 0x03;
-            Registers.BC = 100;
+            Registers.BC.Value = 100;
 
             SetupMemory(instruction);
 
@@ -107,7 +93,7 @@ namespace UnitTests
         public void INC_B()
         {
             byte instruction = 0x04;
-            Registers.B = 100;
+            Registers.B.Value = 100;
 
             SetupMemory(instruction);
 
@@ -122,7 +108,7 @@ namespace UnitTests
         public void INC_B_WithParity()
         {
             byte instruction = 0x04;
-            Registers.B = byte.MaxValue;
+            Registers.B.Value = byte.MaxValue;
 
             SetupMemory(instruction);
 
@@ -139,7 +125,7 @@ namespace UnitTests
         public void DEC_B()
         {
             byte instruction = 0x05;
-            Registers.B = 100;
+            Registers.B.Value = 100;
 
             SetupMemory(instruction);
 
@@ -148,6 +134,20 @@ namespace UnitTests
             Assert.AreEqual(99, Registers.B);
             Assert.AreEqual(4, (int)Clock.GetElapsedCycles());
             Assert.AreEqual(1, Registers.PC);
+        }
+
+        [TestMethod]
+        public void LD_RR_nn()
+        {
+            byte instruction = 0x01;
+
+            SetupMemory(instruction, 99, 88);
+
+            Sut.ExecuteNextInstruction();
+
+            Assert.AreEqual(22627, Registers.BC);
+            Assert.AreEqual(10, (int)Clock.GetElapsedCycles());
+            Assert.AreEqual(3, Registers.PC);
         }
     }
 }

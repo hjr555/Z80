@@ -11,14 +11,28 @@ namespace Z80.Z80
             Value = value;
         }
 
-        public void Decrement(byte count = 1)
+        public void Sub(byte value)
         {
-            Value -= count;
+            Value -= value;
         }
 
-        public void Increment(byte count = 1)
+        public void Add(byte value)
         {
-            Value += count;
+            Value += value;
+        }
+
+        public static Register8 operator ++(Register8 register)
+        {
+            register.Add(1);
+
+            return register;
+        }
+
+        public static Register8 operator --(Register8 register)
+        {
+            register.Sub(1);
+
+            return register;
         }
     }
 }

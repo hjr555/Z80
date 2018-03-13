@@ -5,7 +5,7 @@ namespace Z80
 {
     public static class Registers
     {
-        private static Flags flags => (Flags)F;
+        private static Flags flags => (Flags)F.Value;
 
         // Shadow registers
         private static Register16 AFshadow;
@@ -18,7 +18,7 @@ namespace Z80
         public static Register16 DE;
         public static Register16 HL;
 
-        public static byte A
+        public static Register8 A
         {
             get
             {
@@ -29,7 +29,7 @@ namespace Z80
                 AF.Low = value;
             }
         }
-        public static byte F
+        public static Register8 F
         {
             get
             {
@@ -40,7 +40,7 @@ namespace Z80
                 AF.High = value;
             }
         }
-        public static byte B
+        public static Register8 B
         {
             get
             {
@@ -51,7 +51,7 @@ namespace Z80
                 BC.Low = value;
             }
         }
-        public static byte C
+        public static Register8 C
         {
             get
             {
@@ -62,7 +62,7 @@ namespace Z80
                 BC.High = value;
             }
         }
-        public static byte D
+        public static Register8 D
         {
             get
             {
@@ -73,7 +73,7 @@ namespace Z80
                 DE.Low = value;
             }
         }
-        public static byte E
+        public static Register8 E
         {
             get
             {
@@ -84,7 +84,7 @@ namespace Z80
                 DE.High = value;
             }
         }
-        public static byte H
+        public static Register8 H
         {
             get
             {
@@ -95,7 +95,7 @@ namespace Z80
                 HL.Low = value;
             }
         }
-        public static byte L
+        public static Register8 L
         {
             get
             {
@@ -111,12 +111,12 @@ namespace Z80
         /// <summary>
         /// Interrupt Vector
         /// </summary>
-        public static byte I;
+        public static Register8 I;
 
         /// <summary>
         /// Memory Refresh
         /// </summary>
-        public static byte R;
+        public static Register8 R;
 
         /// <summary>
         /// Stack Pointer
@@ -148,11 +148,11 @@ namespace Z80
             {
                 if (value)
                 {
-                    F = (byte)(F & (byte)Flags.Carry);
+                    F.Value = (byte)(F.Value & (byte)Flags.Carry);
                 }
                 else
                 {
-                    F = (byte)(F & (255 - (byte)Flags.Carry));
+                    F.Value = (byte)(F.Value & (255 - (byte)Flags.Carry));
                 }
             }
         }
@@ -166,11 +166,11 @@ namespace Z80
             {
                 if (value)
                 {
-                    F = (byte)(F & (byte)Flags.Zero);
+                    F.Value = (byte)(F.Value & (byte)Flags.Zero);
                 }
                 else
                 {
-                    F = (byte)(F & (255 - (byte)Flags.Zero));
+                    F.Value = (byte)(F.Value & (255 - (byte)Flags.Zero));
                 }
             }
         }
@@ -184,11 +184,11 @@ namespace Z80
             {
                 if (value)
                 {
-                    F = (byte)(F & (byte)Flags.Sign);
+                    F.Value = (byte)(F.Value & (byte)Flags.Sign);
                 }
                 else
                 {
-                    F = (byte)(F & (255 - (byte)Flags.Sign));
+                    F.Value = (byte)(F.Value & (255 - (byte)Flags.Sign));
                 }
             }
         }
@@ -202,11 +202,11 @@ namespace Z80
             {
                 if (value)
                 {
-                    F = (byte)(F & (byte)Flags.Parity);
+                    F.Value = (byte)(F.Value & (byte)Flags.Parity);
                 }
                 else
                 {
-                    F = (byte)(F & (255 - (byte)Flags.Parity));
+                    F.Value = (byte)(F.Value & (255 - (byte)Flags.Parity));
                 }
             }
         }
@@ -220,11 +220,11 @@ namespace Z80
             {
                 if (value)
                 {
-                    F = (byte)(F & (byte)Flags.Negative);
+                    F.Value = (byte)(F.Value & (byte)Flags.Negative);
                 }
                 else
                 {
-                    F = (byte)(F & (255 - (byte)Flags.Negative));
+                    F.Value = (byte)(F.Value & (255 - (byte)Flags.Negative));
                 }
             }
         }
@@ -238,11 +238,11 @@ namespace Z80
             {
                 if (value)
                 {
-                    F = (byte)(F & (byte)Flags.HalfCarry);
+                    F.Value = (byte)(F.Value & (byte)Flags.HalfCarry);
                 }
                 else
                 {
-                    F = (byte)(F & (255 - (byte)Flags.HalfCarry));
+                    F.Value = (byte)(F.Value & (255 - (byte)Flags.HalfCarry));
                 }
             }
         }
@@ -258,8 +258,8 @@ namespace Z80
             DEshadow = new Register16(0xFFFF);
             HLshadow = new Register16(0xFFFF);
 
-            I = 0xFF;
-            R = 0xFF;
+            I = new Register8(0xFF);
+            R = new Register8(0xFF);
             SP = new Register16(0xFFFF);
             PC = new Register16(0x0000);
             IX = new Register16(0xFFFF);
@@ -285,6 +285,15 @@ namespace Z80
             BCshadow = tmpBC;
             DEshadow = tmpDE;
             HLshadow = tmpHL;
+        }
+
+        public static void EX_AF()
+        {
+            var tmpAF = AF;
+
+            AF = AFshadow;
+
+            AFshadow = tmpAF;
         }
 
         static Registers()

@@ -51,7 +51,6 @@
     <Compile Include="ValueObjects\Register16.cs" />
     <Compile Include="ValueObjects\Register8.cs" />
     <Compile Include="Registers.cs" />
-    <Compile Include="ValueObjects\RegisterBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
