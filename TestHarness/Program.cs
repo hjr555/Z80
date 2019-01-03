@@ -15,6 +15,11 @@ namespace TestHarness
 
         static void Main(string[] args)
         {
+            Console.WindowHeight = 25;
+            Console.WindowWidth = 120;
+            Console.BufferHeight = 25;
+            Console.BufferWidth = 120;
+
             Console.Clear();
             Console.CursorVisible = false;
 
