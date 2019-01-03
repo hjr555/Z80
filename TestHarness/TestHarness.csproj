@@ -11,4 +11,10 @@
     <ProjectReference Include="..\MemoryAdapter\MemoryAdapter.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="zx80.rom">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

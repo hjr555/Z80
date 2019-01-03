@@ -34,5 +34,15 @@ namespace Z80.Z80
 
             return register;
         }
+
+        public string ToHex()
+        {
+            return $"0x{Value.ToString("X")}";
+        }
+
+        public override string ToString()
+        {
+            return Value.ToString("D3");
+        }
     }
 }

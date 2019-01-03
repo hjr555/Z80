@@ -24,93 +24,22 @@ namespace Z80
 
         public static Register8 A
         {
-            get
-            {
-                return AF.Low;
-            }
-            set
-            {
-                AF.Low = value;
-            }
-        }
-        public static Register8 F
-        {
-            get
-            {
-                return AF.High;
-            }
-            set
-            {
-                AF.High = value;
-            }
-        }
-        public static Register8 B
-        {
-            get
-            {
-                return BC.Low;
-            }
-            set
-            {
-                BC.Low = value;
-            }
-        }
-        public static Register8 C
-        {
-            get
-            {
-                return BC.High;
-            }
-            set
-            {
-                BC.High = value;
-            }
-        }
-        public static Register8 D
-        {
-            get
-            {
-                return DE.Low;
-            }
-            set
-            {
-                DE.Low = value;
-            }
-        }
-        public static Register8 E
-        {
-            get
-            {
-                return DE.High;
-            }
-            set
-            {
-                DE.High = value;
-            }
-        }
-        public static Register8 H
-        {
-            get
-            {
-                return HL.Low;
-            }
-            set
-            {
-                HL.Low = value;
-            }
-        }
-        public static Register8 L
-        {
-            get
-            {
-                return HL.High;
-            }
-            set
-            {
-                HL.High = value;
-            }
+            get => AF.Low;
+            set => AF.Low = value;
         }
 
+        public static Register8 F => AF.High;
+        public static Register8 B
+        {
+            get => BC.Low;
+            set => BC.Low = value;
+        }
+
+        public static Register8 C => BC.High;
+        public static Register8 D => DE.Low;
+        public static Register8 E => DE.High;
+        public static Register8 H => HL.Low;
+        public static Register8 L => HL.High;
 
         /// <summary>
         /// Interrupt Vector
@@ -247,6 +176,43 @@ namespace Z80
                 else
                 {
                     F.Value = (byte)(F.Value & (255 - (byte)Flags.HalfCarry));
+                }
+            }
+        }
+
+        public static bool F3
+        {
+            get
+            {
+                return flags.HasFlag(Flags.F3);
+            }
+            set
+            {
+                if (value)
+                {
+                    F.Value = (byte)(F.Value & (byte)Flags.F3);
+                }
+                else
+                {
+                    F.Value = (byte)(F.Value & (255 - (byte)Flags.F3));
+                }
+            }
+        }
+        public static bool F5
+        {
+            get
+            {
+                return flags.HasFlag(Flags.F5);
+            }
+            set
+            {
+                if (value)
+                {
+                    F.Value = (byte)(F.Value & (byte)Flags.F5);
+                }
+                else
+                {
+                    F.Value = (byte)(F.Value & (255 - (byte)Flags.F5));
                 }
             }
         }

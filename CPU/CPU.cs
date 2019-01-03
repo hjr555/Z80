@@ -8,6 +8,11 @@ namespace Z80
 {
     public class CPU
     {
+        public byte CurrentInstruction { get; private set; }
+        public byte NextInstruction => RAM.GetByte(Registers.PC.Value);
+
+        public byte InstructionCounter { get; set; }
+
         private IClock Clock { get; set; }
         private IMemory RAM { get; }
         private Task Process { get; set; }
@@ -82,6 +87,9 @@ namespace Z80
         private void FetchDecodeExecute()
         {
             var instruction = RAM.GetByte(Registers.PC.Value);
+            CurrentInstruction = instruction;
+            InstructionCounter++;
+
             Registers.PC++;
 
             switch (instruction)
@@ -134,9 +142,14 @@ namespace Z80
                 
                 /*--------------------------------------------*/
                 
-                case 0x20:
-                    throw new NotImplementedException();
+                case 0x20: // jr nz, (16 bit address) - if nz then PC = E
                     Clock.IncrementClock(12m / 7m);
+                    
+                    if(!Registers.Zero)
+                    {
+                        //Registers.PC = 
+                    }
+
                     break;
 
                 case 0x21: LD_RR_nn(Registers.HL); break;
@@ -319,8 +332,22 @@ namespace Z80
                 case 0xA0: break;
                 /*--------------------------------------------*/
                 case 0xB0: break;
-                case 0xBC:
-                    var tmp = Registers.A.Value - Registers.H.Value;
+                case 0xBC: // Compare
+                    // CP is a subtraction from A that doesn't update A, only the flags it would have set/reset if it really was subtracted.
+                    var tmp = (byte) (Registers.A.Value - Registers.H.Value);
+
+                    // CP_R(Registers.H);
+
+                    Registers.Sign = GetBit(tmp, 7);
+                    Registers.Zero = Registers.A.Value == Registers.H.Value;
+                    Registers.F5 = GetBit(tmp, 4);
+                    Registers.HalfCarry = GetBit(tmp, 3);
+                    Registers.F3 = GetBit(tmp, 2);
+
+                    Registers.Subtract = true;
+
+
+                    Clock.IncrementClock(4);
                     break;
                 /*--------------------------------------------*/
                 case 0xC0: break;
@@ -334,6 +361,7 @@ namespace Z80
                     {
                         Registers.PC.Value = dest;
                     }
+                    Clock.IncrementClock(10);
                     break;
                 case 0xC4: break;
 
@@ -657,6 +685,21 @@ namespace Z80
             Registers.PC++;
 
             return returnValue;
+        }
+
+        private void SetFlags(int result)
+        {
+            Registers.Zero = result == 0;
+        }
+
+        /// <summary>
+        /// Gets a given bit from a byte
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="bitNumber">Zero based position of bit. Most significant first.</param>
+        private bool GetBit(byte source, byte bitNumber)
+        {
+            return ((source >> bitNumber) & 1) == 1;
         }
     }
 }

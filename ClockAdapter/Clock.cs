@@ -16,14 +16,14 @@ namespace ClockAdapter
         {
             Timer += (decimal)numberOfCycles;
 
-            Thread.Sleep(100 * numberOfCycles);
+            //Thread.Sleep(100 * numberOfCycles);
         }
 
         public void IncrementClock(decimal numberOfCycles)
         {
             Timer += numberOfCycles;
 
-            Thread.Sleep(100 * (int)numberOfCycles);
+            //Thread.Sleep(100 * (int)numberOfCycles);
         }
     }
 }

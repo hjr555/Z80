@@ -12,7 +12,6 @@ namespace Z80.Enumerations
         HalfCarry = 16,
         F5 = 32,
         Zero = 64,
-        Sign = 128,
-        CARRY = 256
+        Sign = 128
     }
 }
